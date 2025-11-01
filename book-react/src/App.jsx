@@ -1,14 +1,19 @@
 import Button from 'react-bootstrap/Button';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 
+import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { useState } from 'react';
+
+import './App.css';
+import SearchBar from './components/SearchBar.jsx';
 
 function NavigationBar() {
   const navigate = useNavigate();
 
   return (
+    <div className="NavigationBar">
+      <h1 className="important-text">Bookworm Books</h1>
     <Tabs
       defaultActiveKey="bookshelf"
       id="book-tabs"
@@ -20,6 +25,7 @@ function NavigationBar() {
       <Tab eventKey="catalog" title="Catalog" />
       <Tab eventKey="account" title="Account" />
     </Tabs>
+    </div>
   );
 }
 
@@ -42,7 +48,9 @@ function Bookshelf() {
 }
 
 function Catalog() {
-  return <h1>Catalog Page</h1>;
+  return ( 
+    <SearchBar placeholder = "Search by book, author, or series..."/>
+  );
 }
 
 function Account() {
