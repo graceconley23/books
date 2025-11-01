@@ -1,8 +1,29 @@
 import Button from 'react-bootstrap/Button';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+
 import { useState } from 'react';
 
-function App() {
+function NavigationBar() {
+  const navigate = useNavigate();
 
+  return (
+    <Tabs
+      defaultActiveKey="bookshelf"
+      id="book-tabs"
+      className="mb-3"
+      justify
+      onSelect={(k) => navigate(`/${k}`)}
+    >
+      <Tab eventKey="bookshelf" title="My Bookshelf" />
+      <Tab eventKey="catalog" title="Catalog" />
+      <Tab eventKey="account" title="Account" />
+    </Tabs>
+  );
+}
+
+function Bookshelf() {
   const [count, setCount] = useState(0);
 
   function increaseCount() {
@@ -11,13 +32,41 @@ function App() {
 
   return (
     <div className="d-grid gap-2">
-       <h1>"Welcome Bookworms!"</h1>
-       <Button variant="outline-success" size="lg" onClick={increaseCount}>
-          Read!
-       </Button>
-       <h2>You’ve read {count} times this year</h2>
-     </div>
-   );
- }
+      <h1>Welcome Bookworms!</h1>
+      <Button variant="outline-success" size="lg" onClick={increaseCount}>
+        Read!
+      </Button>
+      <h2>You’ve read {count} times this year</h2>
+    </div>
+  )
+}
+
+function Catalog() {
+  return <h1>Catalog Page</h1>;
+}
+
+function Account() {
+  return (
+    <Button variant="danger" size="sm">
+      Logout
+    </Button>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <NavigationBar />
+
+      {/* Routes */}
+      <Routes>
+        <Route path="*" element={<Navigate to="/bookshelf" replace />} /> {/* default route */}
+        <Route path="/bookshelf" element={<Bookshelf />} />
+        <Route path="/catalog" element={<Catalog />} />
+        <Route path="/account" element={<Account />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
 
 export default App;
