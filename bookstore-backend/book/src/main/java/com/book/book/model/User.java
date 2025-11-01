@@ -21,11 +21,11 @@ public class User {
         this.profilePictureLink = "Spoopy.png";
     }
 
-    private int getId() {
+    public int getId() {
         return this.id;
     }
 
-    private void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
