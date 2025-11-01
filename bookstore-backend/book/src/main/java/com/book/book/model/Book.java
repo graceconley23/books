@@ -55,6 +55,14 @@ public class Book {
         this.quantity = quantity;
     }
 
+    public void increaseQuantity(int amount) {
+        this.quantity += amount;
+    }
+
+    public void decreaseQuantity(int amount) {
+        this.quantity -= amount;
+    }
+
     @Override
     public String toString() {
         return "Title: " + title + " By: " + author + " Series: " + series +
