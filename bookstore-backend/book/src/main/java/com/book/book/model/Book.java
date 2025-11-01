@@ -1,8 +1,5 @@
 package com.book.book.model;
 
-
-import java.util.Objects;
-
 public class Book {
     private String title;
     private String author;
