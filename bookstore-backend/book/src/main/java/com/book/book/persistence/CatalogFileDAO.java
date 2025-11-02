@@ -98,7 +98,7 @@ public class CatalogFileDAO implements CatalogDAO {
                 return false;
             }
         }
-        return !checkInStock || !book.outOfStock(); // final condition
+        return (!checkInStock || !book.outOfStock()); // final condition
     }
 
     private Book[] filterSearch(ArrayList<Book> books, double minPrice, double maxPrice,
