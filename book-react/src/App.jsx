@@ -52,7 +52,22 @@ function Catalog() {
   return ( 
     <div>
       <SearchBar placeholder = "Search by book, author, or series..."/>
-      <BookCard />
+      <div className="d-flex flex-wrap justify-content-left gap-4 p-4">
+        <BookCard 
+          title="The Lightning Thief" 
+          author="Rick Riordan" 
+          series="Percy Jackson & the Olympians"
+          volume="1"
+          cover="/vite.svg"
+        />
+        <BookCard 
+          title="Inkheart" 
+          author="Cornelia Funke" 
+          series="Inkheart Trilogy"
+          volume="1"
+          cover="src/assets/react.svg"
+        />
+      </div>
     </div>
   );
 }

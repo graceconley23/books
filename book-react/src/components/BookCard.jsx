@@ -1,20 +1,26 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import reactLogo from '../assets/react.svg';
 
 import { Component } from "react";
 
 class BookCard extends Component {
   render() {
+
+    const { title, author, series, volume, cover } = this.props;
+
     return (
       <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src={reactLogo} />
+        <Card.Img 
+          variant="top"
+          style={{ height: "200px", objectFit: "contain", width: "100%" }}
+          src={cover}
+        />
         <Card.Body>
-          <Card.Title>Book Title</Card.Title>
+          <Card.Title>{title}</Card.Title>
           <Card.Text>
-            Author Name
+            By: {author}
             <br />
-            Series Name (Volume #)
+            Series: {series} (Book {volume})
           </Card.Text>
 
           <div className="d-grid gap-2">
