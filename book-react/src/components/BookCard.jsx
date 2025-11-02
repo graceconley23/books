@@ -9,7 +9,7 @@ class BookCard extends Component {
     const { title, author, series, volume, cover } = this.props;
 
     return (
-      <Card style={{ width: "17rem" }}>
+      <Card style={{ width: "16rem" }}>
         <Card.Img 
           variant="top"
           style={{ height: "200px", objectFit: "contain", width: "100%" }}

@@ -94,7 +94,7 @@ function Catalog() {
       {/* Main content area */}
       <div className="d-flex">
         {/* Left sidebar: Filters */}
-        <div className="p-3 border-end" style={{ width: "22rem", minHeight: "100vh" }}>
+        <div className="p-3 border-end" style={{ width: "20rem", minHeight: "100vh" }}>
           <Filters viewingAvailable={viewingAvailable} setViewingAvailable={setViewingAvailable}
           maxPrice={maxPrice} setMaxPrice={setMaxPrice}/>
         </div>
@@ -109,7 +109,7 @@ function Catalog() {
                 author={book.author}
                 series={book.series}
                 volume={book.numberInSeries}
-                cover="/vite.svg"
+                cover={book.coverImageUrl}
               />
             ))}
           </div>
