@@ -163,6 +163,8 @@ public class UserFileDAO implements UserDAO {
     public Book addToBookshelf(int id, String ISBN) throws IOException {
         Book toAdd = catalogDAO.getBook(ISBN);
         User user = getUser(id);
+        System.out.println(toAdd);
+        System.out.println(user);
         if (toAdd == null || user == null) {
             return null;
         }

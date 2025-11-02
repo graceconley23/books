@@ -1,6 +1,7 @@
 package com.book.book.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
@@ -96,7 +97,7 @@ public class UserController {
 
     @PutMapping("/bookshelf/{id}/{ISBN}")
     public ResponseEntity<Book> addBookToBookshelf(@PathVariable int id, @PathVariable String ISBN) throws IOException {
-        logger.info("PUT bookshelf/" + ISBN);
+        logger.info("PUT bookshelf/" + id + '/' + ISBN);
         try {
             Book ret = userDAO.addToBookshelf(id, ISBN);
             if (ret == null) {

@@ -53,10 +53,12 @@ public class User {
         if (this.bookshelf.contains(book)) {
             Book current = bookshelf.get(bookshelf.indexOf(book));
             current.increaseQuantity(1);
+            System.out.println("Returning current: " + current);
             return current;
         } else {
             Book copy = book.copy();
             this.bookshelf.add(copy); // same book but quantity 1
+            System.out.println("Returning copy: " + copy);
             return copy;
         }
     }
