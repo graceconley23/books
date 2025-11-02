@@ -4,7 +4,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import axios from 'axios'
 
 import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import './App.css';
 import SearchBar from './components/SearchBar.jsx';
@@ -55,10 +55,12 @@ function Bookshelf() {
 function Catalog() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState("");
+  const [searchPressed, setSearchPressed] = useState(false);
 
   async function fetchBooks() {
     try {
-      const catalog = await axios.get('http://localhost:8080/catalog/').then(response => response.data);
+      const catalog = await axios.get(`http://localhost:8080/catalog/?text=${encodeURIComponent(searchText)}`).then(response => response.data);
       setBooks(catalog);
     } catch (error) {
       console.log(error);
@@ -67,7 +69,14 @@ function Catalog() {
     }
   }
 
-  fetchBooks();
+  useEffect(() => { // call once on startup
+    fetchBooks();
+  }, [])
+
+  useEffect(() => {
+    fetchBooks();
+    setSearchPressed(false);
+  }, [searchPressed])
 
   if (loading) return <p>Loading catalog...</p>
 
@@ -75,7 +84,8 @@ function Catalog() {
     <div>
       {/* Search bar full width at top */}
       <div className="p-3 border-bottom bg-light">
-        <SearchBar placeholder="Search by book, author, or series..." />
+        <SearchBar placeholder="Search by book, author, or series..." searchText={searchText} setSearchText={setSearchText}
+        setSearchPressed={setSearchPressed}/>
       </div>
 
       {/* Main content area */}

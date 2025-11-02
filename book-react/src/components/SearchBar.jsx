@@ -3,32 +3,25 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from 'react-bootstrap/Form';
 
-class SearchBar extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            inputText: ""
-        };
-    }
+function SearchBar({searchText, setSearchText, setSearchPressed}) {
+    // handleChange = (event) => {
+    //     this.setState({
+    //         inputText: event.target.value
+    //     });
+    // }
 
-    handleChange = (event) => {
-        this.setState({
-            inputText: event.target.value
-        });
-    }
-
-    handleKeyPress = (event) => {
+    const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
-             event.preventDefault(); // Prevent form submission
-            this.alertSearch(this.state.inputText);
+            event.preventDefault(); // Prevent form submission
+            alertSearch(searchText);
         }
     };
 
-    alertSearch = (text) => {
-        alert("Hitched Enter! You searched for: " + text);
+    const alertSearch = (text) => {
+        //alert("Hitched Enter! You searched for: " + text);
+        setSearchPressed(true);
     };
     
-    render() {
         return (
             <Form>
                 <Form.Label>Search the Catalog</Form.Label>
@@ -36,16 +29,16 @@ class SearchBar extends Component {
                     <Form.Control
                         id="search-input"
                         placeholder="Search by title, author, or series"
-                        onKeyDown={this.handleKeyPress}
-                        onChange={this.handleChange}
+                        onKeyDown={handleKeyPress}
+                        value={searchText}
+                        onChange={e => setSearchText(e.target.value)}
                     />
-                    <Button variant="secondary" onClick={() => this.alertSearch(this.state.inputText)}>
+                    <Button variant="secondary" onClick={() => alertSearch(searchText)}>
                         Search
                     </Button>
                 </InputGroup>
         </Form>
         );
-    }
 }
 
 export default SearchBar;
