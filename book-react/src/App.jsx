@@ -12,12 +12,13 @@ import Filters from './components/Filters.jsx';
 
 function NavigationBar() {
   const navigate = useNavigate();
+  const currentPath = location.pathname.replace("/", "") || "bookshelf";
 
   return (
     <div className="NavigationBar">
       <h1 className="important-text">Bookworm Books</h1>
     <Tabs
-      defaultActiveKey="bookshelf"
+      defaultActiveKey={currentPath}
       id="book-tabs"
       className="mb-3"
       justify
