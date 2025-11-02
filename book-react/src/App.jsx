@@ -35,7 +35,7 @@ function NavigationBar() {
   );
 }
 
-function Catalog() {
+function Catalog(currentUser, setCurrentUser) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
@@ -44,7 +44,6 @@ function Catalog() {
   const [maxPrice, setMaxPrice] = useState(0);
   const [genres, setGenres] = useState([])
   const [selectedGenres, setSelectedGenres] = useState([]);
-  const [currentUser, setCurrentUser] = useState(0);
 
   async function fetchBooks() {
     try {
@@ -70,7 +69,6 @@ function Catalog() {
   useEffect(() => { // call once on startup
     fetchBooks();
     loadGenres();
-    setCurrentUser(2);
   }, [])
 
   useEffect(() => {
@@ -125,6 +123,7 @@ function Account() {
 }
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(2);
   return (
     <BrowserRouter>
       <NavigationBar />
@@ -132,8 +131,8 @@ function App() {
       {/* Routes */}
       <Routes>
         <Route path="*" element={<Navigate to="/bookshelf" replace />} /> {/* default route */}
-        <Route path="/bookshelf" element={<Bookshelf />} />
-        <Route path="/catalog" element={<Catalog />} />
+        <Route path="/bookshelf" element={<Bookshelf currentUser={currentUser}/>} />
+        <Route path="/catalog" element={<Catalog currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
         <Route path="/account" element={<Account />} />
       </Routes>
     </BrowserRouter>

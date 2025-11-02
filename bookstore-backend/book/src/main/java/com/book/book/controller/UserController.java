@@ -65,7 +65,7 @@ public class UserController {
 
     @PutMapping("/cart/{id}/{ISBN}")
     public ResponseEntity<Book> addBookToCart(@PathVariable int id, @PathVariable String ISBN) throws IOException {
-        logger.info("POST cart/" + ISBN);
+        logger.info("PUT cart/" + ISBN);
 
         try {
             Book ret = userDAO.addToCart(id, ISBN);
@@ -122,15 +122,37 @@ public class UserController {
         }
     }
 
-    @GetMapping("/bookshelf/{id}/{ISBN}")
-    public ResponseEntity<Book[]> getBookshelf(@PathVariable int id, @PathVariable String ISBN) throws IOException {
-        logger.info("GET account/" + ISBN);
+    @GetMapping("/bookshelf/{id}")
+    public ResponseEntity<Book[]> getBookshelf(@PathVariable int id) throws IOException {
+        logger.info("GET account/bookshelf/" + id);
         try {
             Book[] ret = userDAO.getBookshelf(id);
             if (ret == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(ret, HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/timesRead/{id}")
+    public ResponseEntity<Integer>  getTimesRead(@PathVariable int id) throws IOException {
+        logger.info("GET account/timesRead/" + id);
+        try {
+            int ret = userDAO.getAmountRead(id);
+            return new ResponseEntity<>(ret, HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/timesRead/{id}/{number}")
+    public ResponseEntity<Integer> updateBooksReadThisYear(@PathVariable int id, @PathVariable int number) throws IOException {
+        logger.info("PUT timesRead/" + id + "/" + number);
+        try {
+            int newCount = userDAO.updateAmountRead(id, number);
+            return new ResponseEntity<>(newCount, HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
