@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 @RestController
@@ -140,6 +141,17 @@ public class CatalogController {
             return new ResponseEntity<>(ret, HttpStatus.OK);
         }
         catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/genres")
+    public ResponseEntity<Set<String>> getGenres() {
+        logger.info("GET catalog/genres");
+        try {
+            Set<String> ret = catalogDAO.getGenres();
+            return new ResponseEntity<>(ret, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

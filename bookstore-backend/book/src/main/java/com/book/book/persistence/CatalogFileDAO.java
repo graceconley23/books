@@ -7,10 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 @Component
 public class CatalogFileDAO implements CatalogDAO {
@@ -23,6 +20,14 @@ public class CatalogFileDAO implements CatalogDAO {
         this.file = new File(filename);
         this.objectMapper = objectMapper;
         loadFromFile();
+    }
+
+    public Set<String> getGenres() {
+        TreeSet<String> genres = new TreeSet<>();
+        for (Book book : bookMap.values()) {
+            genres.addAll(book.getGenres());
+        }
+        return genres;
     }
 
     private void loadFromFile() {
