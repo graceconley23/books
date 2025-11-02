@@ -7,7 +7,7 @@ import java.util.List;
 public interface CatalogDAO {
     Book[] getBooks() throws IOException;
 
-    Book[] searchBook(String searchText, double minPrice, double maxPrice,
+    Book[] searchBooks(String searchText, double minPrice, double maxPrice,
                       List<String> genres, boolean inStock) throws IOException;
 
     Book getBook(String ISBN) throws IOException;

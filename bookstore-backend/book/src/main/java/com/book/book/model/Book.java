@@ -11,10 +11,10 @@ public class Book {
     private double price;
     private Set<String> genres;
     private int numberInSeries;
-    private int numPages;
+    private int numberOfPages;
 
     public Book(String title, String author, String series, String ISBN,
-                int quantity, double price, Set<String> genres) {
+                int quantity, double price, Set<String> genres, int numberInSeries, int numberOfPages) {
         this.title = title;
         this.author = author;
         this.series = series;
@@ -22,6 +22,8 @@ public class Book {
         this.quantity = quantity;
         this.price = price;
         this.genres = genres;
+        this.numberInSeries = numberInSeries;
+        this.numberOfPages = numberOfPages;
     }
 
     public String getTitle() {
@@ -100,11 +102,28 @@ public class Book {
         return genres.contains(genre);
     }
 
+    public int getNumberInSeries() {
+        return numberInSeries;
+    }
+
+    public void setNumberInSeries(int numberInSeries) {
+        this.numberInSeries = numberInSeries;
+    }
+
+    public int getNumberOfPages() {
+        return numberOfPages;
+    }
+
+    public void setNumberOfPages(int numberOfPages) {
+        this.numberOfPages = numberOfPages;
+    }
+
     @Override
     public String toString() {
         return "Title: " + title + " By: " + author + " Series: " + series +
                 " ISBN: " + ISBN + " Quantity: " + quantity + "  Price: "
-                + price +  " Genres: " + genres.toString();
+                + price +  " Genres: " + genres.toString() + "numberInSeries: "
+                + numberInSeries + "numberOfPages: " + numberOfPages;
     }
 
     @Override

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -18,6 +19,7 @@ public class CatalogFileDAO implements CatalogDAO {
     private TreeMap<String, Book> bookMap;
 
     public CatalogFileDAO(@Value("${books.file}") String filename, ObjectMapper objectMapper) {
+        System.out.println("Filename: " + filename);
         this.file = new File(filename);
         this.objectMapper = objectMapper;
         loadFromFile();
@@ -44,12 +46,13 @@ public class CatalogFileDAO implements CatalogDAO {
         ArrayList<Book> temp = new ArrayList<>(bookMap.values());
 
         Book[] ret = new Book[temp.size()];
-        return temp.toArray(ret);
+        temp.toArray(ret);
+        return ret;
     }
 
     // TODO sort by author, series, title
     private ArrayList<Book> getBooksArrayByText(String searchText) {
-        ArrayList<Book> temp = new ArrayList<>(bookMap.values());
+        ArrayList<Book> temp = new ArrayList<>();
 
         for (Book book : bookMap.values()) {
             if (book.getTitle().toLowerCase().contains(searchText.toLowerCase())) {
@@ -101,7 +104,7 @@ public class CatalogFileDAO implements CatalogDAO {
     }
 
     @Override
-    public Book[] searchBook(String searchText, double minPrice, double maxPrice,
+    public Book[] searchBooks(String searchText, double minPrice, double maxPrice,
                              List<String> genres, boolean inStock) throws IOException {
         return filterSearch(getBooksArrayByText(searchText), minPrice, maxPrice, genres, inStock);
     }
@@ -113,7 +116,7 @@ public class CatalogFileDAO implements CatalogDAO {
 
     @Override
     public Book createBook(Book book) throws IOException {
-        if (!bookMap.containsKey(book.getISBN())) {
+        if (bookMap.containsKey(book.getISBN())) {
             return null;
         }
         bookMap.put(book.getISBN(), book);
@@ -123,7 +126,7 @@ public class CatalogFileDAO implements CatalogDAO {
 
     @Override
     public Book updateBook(String ISBN, Book book) throws IOException {
-        if (!bookMap.containsKey(book.getISBN())) {
+        if (!bookMap.containsKey(ISBN)) {
             return null;
         }
         book.setISBN(ISBN);
@@ -137,9 +140,10 @@ public class CatalogFileDAO implements CatalogDAO {
         if (!bookMap.containsKey(ISBN)) {
             return null;
         }
+        Book removed = bookMap.get(ISBN);
         bookMap.remove(ISBN);
         writeToFile();
-        return bookMap.get(ISBN);
+        return removed;
     }
 
     @Override
