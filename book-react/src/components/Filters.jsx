@@ -1,5 +1,6 @@
 import Accordion from 'react-bootstrap/Accordion';
 import Form from 'react-bootstrap/Form';
+import Range from './Range.jsx';
 
 function Filters() {
   return (
@@ -7,7 +8,7 @@ function Filters() {
       <Accordion.Item eventKey="price-range">
         <Accordion.Header>Price Range</Accordion.Header>
         <Accordion.Body>
-          Filter goes here
+          <Range max={100} />
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="availability">
