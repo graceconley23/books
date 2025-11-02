@@ -1,16 +1,17 @@
 package com.book.book.persistence;
 
-import com.book.book.model.Book;
-import com.book.book.model.User;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import com.book.book.model.Book;
+import com.book.book.model.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class UserFileDAO implements UserDAO {
@@ -165,7 +166,7 @@ public class UserFileDAO implements UserDAO {
     public Book[] getCart(int id) throws IOException {
         if (!userMap.containsKey(id)) {
             return null;
-        }
+        }  
         List<Book> temp = userMap.get(id).getShoppingCart();
         Book[] cart = new Book[temp.size()];
         temp.toArray(cart);
