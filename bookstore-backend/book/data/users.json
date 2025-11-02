@@ -1,1 +1,33 @@
-[]
+[
+  {
+    "id": 1,
+    "name": "balls8",
+    "password": "a",
+    "bookshelf": [],
+    "shoppingCart": [],
+    "booksReadThisYear": 50,
+    "profilePictureLink": "Spoopy.png"
+  },
+  {
+    "id": 2,
+    "name": "balls9",
+    "password": "a",
+    "bookshelf": [
+      {
+        "title":"Book of Not Evil",
+        "author":"Greg Heffley",
+        "series":"Greg and the Olympians",
+        "quantity":1000,
+        "price":15.0,
+        "genres":["Whimsy and Joy and Happiness","Good"],
+        "numberInSeries":1,
+        "numberOfPages":20,
+        "isbn":"48",
+        "coverImageUrl":"/vite.svg"
+      }
+    ],
+    "shoppingCart": [],
+    "booksReadThisYear": 20,
+    "profilePictureLink": "Spoopy.png"
+  }
+]
