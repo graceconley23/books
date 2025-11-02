@@ -12,7 +12,8 @@
     "id": 2,
     "name": "balls9",
     "password": "a",
-    "bookshelf": [
+    "bookshelf": [],
+    "shoppingCart": [
       {
         "title":"Book of Not Evil",
         "author":"Greg Heffley",
@@ -26,7 +27,6 @@
         "coverImageUrl":"/vite.svg"
       }
     ],
-    "shoppingCart": [],
     "booksReadThisYear": 20,
     "profilePictureLink": "Spoopy.png"
   }

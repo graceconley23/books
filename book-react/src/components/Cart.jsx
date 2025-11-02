@@ -9,7 +9,9 @@ function Cart() {
 
   async function fetchBooks() {
     try {
-      const cart = await axios.get(`http://localhost:8080/cart/1`).then(response => response.data);
+      const cart = await axios.get(`http://localhost:8080/account/2`).then(response => response.data);
+      console.log(cart);
+      console.log(Array.isArray(cart));
       setBooks(cart);
     } catch (error) {
       console.log(error);
@@ -21,10 +23,6 @@ function Cart() {
   useEffect(() => { // call once on startup
     fetchBooks();
   }, [])
-
-  useEffect(() => {
-    fetchBooks();
-  })
 
   if (loading) return <p>Loading cart...</p>
 

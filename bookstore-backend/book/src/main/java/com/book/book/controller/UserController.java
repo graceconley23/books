@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.book.book.model.Book;
+import com.book.book.model.User;
 import com.book.book.persistence.CatalogDAO;
 import com.book.book.persistence.UserDAO;
 
@@ -52,8 +53,14 @@ public class UserController {
     public ResponseEntity<Book[]> getCart(@PathVariable int id) throws IOException {
         logger.info("GET cart");
         try {
-            Book[] books = userDAO.getCart(id);
-            return new ResponseEntity<>(books, HttpStatus.OK);
+            User user = userDAO.getUser(id);
+            if (user == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            else {
+                Book[] books = userDAO.getCart(id);
+                return new ResponseEntity<>(books, HttpStatus.OK);
+            }
         }  catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
