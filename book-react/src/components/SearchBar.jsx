@@ -1,28 +1,49 @@
 import { Component } from "react";
+import Button from "react-bootstrap/Button";
+import InputGroup from "react-bootstrap/InputGroup";
 import Form from 'react-bootstrap/Form';
 
 class SearchBar extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         inputText: ""
-    //     };
-    // }
+    constructor(props) {
+        super(props);
+        this.state = {
+            inputText: ""
+        };
+    }
+
+    handleChange = (event) => {
+        this.setState({
+            inputText: event.target.value
+        });
+    }
 
     handleKeyPress = (event) => {
         if (event.key === 'Enter') {
-            alert("Hitched Enter! You searched for: " + event.target.value);
+             event.preventDefault(); // Prevent form submission
+            this.alertSearch(this.state.inputText);
         }
+    };
+
+    alertSearch = (text) => {
+        alert("Hitched Enter! You searched for: " + text);
     };
     
     render() {
         return (
             <Form>
-                <Form.Group className="mb-3" controlId="my-search-bar">
                 <Form.Label>Search the Catalog</Form.Label>
-                <Form.Control placeholder="Search by title, author, or series" onKeyDown={this.handleKeyPress}/>
-                </Form.Group>
-            </Form>
+                <InputGroup className="mb-3">
+                    <Form.Control
+                        id="search-input"
+                        placeholder="Search by title, author, or series"
+                        onKeyDown={this.handleKeyPress}
+                        onChange={this.handleChange}
+                    />
+                    <Button variant="secondary" onClick={() => this.alertSearch(this.state.inputText)}>
+                        Search
+                    </Button>
+                </InputGroup>
+        </Form>
         );
     }
 }

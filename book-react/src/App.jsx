@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 import './App.css';
 import SearchBar from './components/SearchBar.jsx';
+import BookCard from './components/BookCard.jsx';
 
 function NavigationBar() {
   const navigate = useNavigate();
@@ -49,7 +50,10 @@ function Bookshelf() {
 
 function Catalog() {
   return ( 
-    <SearchBar placeholder = "Search by book, author, or series..."/>
+    <div>
+      <SearchBar placeholder = "Search by book, author, or series..."/>
+      <BookCard />
+    </div>
   );
 }
 
