@@ -105,9 +105,10 @@ function Catalog() {
                 author={book.author}
                 series={book.series}
                 volume={book.numberInSeries}
-                cover="/vite.svg"
+                cover={book.coverImageUrl}
               />
             ))}
+
             <BookCard 
               title="The Lightning Thief" 
               author="Rick Riordan" 

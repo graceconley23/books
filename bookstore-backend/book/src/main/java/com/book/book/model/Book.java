@@ -12,9 +12,10 @@ public class Book {
     private Set<String> genres;
     private int numberInSeries;
     private int numberOfPages;
+    private String coverImageUrl;
 
     public Book(String title, String author, String series, String ISBN,
-                int quantity, double price, Set<String> genres, int numberInSeries, int numberOfPages) {
+                int quantity, double price, Set<String> genres, int numberInSeries, int numberOfPages, String coverImageUrl) {
         this.title = title;
         this.author = author;
         this.series = series;
@@ -24,6 +25,7 @@ public class Book {
         this.genres = genres;
         this.numberInSeries = numberInSeries;
         this.numberOfPages = numberOfPages;
+        this.coverImageUrl = coverImageUrl;
     }
 
     public String getTitle() {
@@ -118,12 +120,21 @@ public class Book {
         this.numberOfPages = numberOfPages;
     }
 
+    public String getCoverImageUrl() {
+        return coverImageUrl;
+    }
+
+    public void setCoverImageUrl(String coverImageUrl) {
+        this.coverImageUrl = coverImageUrl;
+    }
+
     @Override
     public String toString() {
         return "Title: " + title + " By: " + author + " Series: " + series +
                 " ISBN: " + ISBN + " Quantity: " + quantity + "  Price: "
                 + price +  " Genres: " + genres.toString() + "numberInSeries: "
-                + numberInSeries + "numberOfPages: " + numberOfPages;
+                + numberInSeries + "numberOfPages: " + numberOfPages + 
+                " CoverImageUrl: " + coverImageUrl;
     }
 
     @Override
