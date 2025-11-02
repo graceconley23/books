@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
 
-function Range({ min = 0, max }) {
+function Range({ min = 0, max, setMaxPrice }) {
   const [value, setValue] = useState(max);
 
   const formatPrice = (val) =>
@@ -10,6 +10,7 @@ function Range({ min = 0, max }) {
   const handleChange = (e) => {
     const newVal = Number(e.target.value);
     setValue(newVal);
+    setMaxPrice(newVal);
   }
 
   return (
