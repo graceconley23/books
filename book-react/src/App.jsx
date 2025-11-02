@@ -108,6 +108,7 @@ function Catalog() {
                 series={book.series}
                 volume={book.numberInSeries}
                 cover={book.coverImageUrl}
+                price={book.price}
               />
             ))}
           </div>

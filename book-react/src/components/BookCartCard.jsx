@@ -1,12 +1,13 @@
 import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Card from 'react-bootstrap/Card';
 
 import { Component } from "react";
 
-class BookCard extends Component {
+class BookCartCard extends Component {
   render() {
 
-    const { title, author, series, volume, cover, price } = this.props;
+    const { title, author, cover, price, quantity } = this.props;
 
     const formatPrice = (val) =>
       val.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 });
@@ -23,22 +24,17 @@ class BookCard extends Component {
           <Card.Text>
             By: {author}
             <br />
-            Series: {series} (Book {volume})
-            <br />
             Price: {formatPrice(price)}
           </Card.Text>
 
           <div className="d-grid gap-2">
-            <Button variant="outline-primary" size="sm" className="w-100"
-              onClick={() => alert("Added to Bookshelf")}
-            >
-              Add to Bookshelf
-            </Button>
-            <Button variant="outline-primary" size="sm" className="w-100"
-              onClick={() => alert("Added to Cart")}
-            >
-              Add to Cart
-            </Button>
+            <ButtonGroup aria-label="quantity">
+              <Button variant="outline-danger">-</Button>
+              <Button variant="outline-dark" disabled="true">
+                Qty: {quantity}
+              </Button>
+              <Button variant="outline-success">+</Button>
+            </ButtonGroup>
           </div>
         </Card.Body>
       </Card>
@@ -46,4 +42,4 @@ class BookCard extends Component {
   }
 }
 
-export default BookCard;
+export default BookCartCard;

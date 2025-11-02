@@ -1,1 +1,33 @@
-[{"name":"balls8","password":"a","id":1,"bookshelf":[],"shoppingCart":[],"booksReadThisYear":50,"profilePictureLink":"Spoopy.png"},{"name":"balls9","password":"a","id":2,"bookshelf":[],"shoppingCart":[{"title":"Book of Not Evil","author":"Greg Heffley","series":"Greg and the Olympians","quantity":2,"price":15.0,"genres":["Whimsy and Joy and Happiness","Good"],"numberInSeries":1,"numberOfPages":20,"coverImageUrl":"/vite.svg","isbn":"48"}],"booksReadThisYear":20,"profilePictureLink":"Spoopy.png"}]
+[
+  {
+    "id": 1,
+    "name": "balls8",
+    "password": "a",
+    "bookshelf": [],
+    "shoppingCart": [],
+    "booksReadThisYear": 50,
+    "profilePictureLink": "Spoopy.png"
+  },
+  {
+    "id": 2,
+    "name": "balls9",
+    "password": "a",
+    "bookshelf": [],
+    "shoppingCart": [
+      {
+        "title":"Book of Not Evil",
+        "author":"Greg Heffley",
+        "series":"Greg and the Olympians",
+        "quantity":2,
+        "price":15.0,
+        "genres":["Whimsy and Joy and Happiness","Good"],
+        "numberInSeries":1,
+        "numberOfPages":20,
+        "isbn":"48",
+        "coverImageUrl":"/vite.svg"
+      }
+    ],
+    "booksReadThisYear": 20,
+    "profilePictureLink": "Spoopy.png"
+  }
+]
