@@ -2,13 +2,16 @@ import Accordion from 'react-bootstrap/Accordion';
 import Form from 'react-bootstrap/Form';
 import Range from './Range.jsx';
 
-function Filters() {
+function Filters({viewingAvailable, setViewingAvailable, maxPrice, setMaxPrice}) {
+  const handleAvailabilityChange = (event) => {
+    setViewingAvailable(event.target.checked)
+  }
   return (
     <Accordion alwaysOpen>
       <Accordion.Item eventKey="price-range">
         <Accordion.Header>Price Range</Accordion.Header>
         <Accordion.Body>
-          <Range max={100} />
+          <Range max={100} setMaxPrice={setMaxPrice}/>
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="availability">
@@ -20,6 +23,8 @@ function Filters() {
                     type="switch"
                     id="in-stock-switch"
                     label={"In Stock"}
+                    checked={viewingAvailable}
+                    onChange={handleAvailabilityChange}
                 />
             </div>
           </Form>

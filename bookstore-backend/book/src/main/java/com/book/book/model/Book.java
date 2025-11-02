@@ -133,7 +133,7 @@ public class Book {
         return "Title: " + title + " By: " + author + " Series: " + series +
                 " ISBN: " + ISBN + " Quantity: " + quantity + "  Price: "
                 + price +  " Genres: " + genres.toString() + "numberInSeries: "
-                + numberInSeries + "numberOfPages: " + numberOfPages + 
+                + numberInSeries + "numberOfPages: " + numberOfPages +
                 " CoverImageUrl: " + coverImageUrl;
     }
 

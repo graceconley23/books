@@ -67,32 +67,36 @@ public class CatalogFileDAO implements CatalogDAO {
         return temp;
     }
 
+    private boolean matchesFilter(Book book, double minPrice, double maxPrice, List<String> genres, boolean checkInStock) {
+        boolean removeFlag;
+
+        if (minPrice != 0 && book.getPrice() < minPrice) {
+            return false;
+        }
+        if (maxPrice != 0 && book.getPrice() > maxPrice) {
+            return false;
+        }
+        if (!genres.isEmpty()) {
+            removeFlag = true;
+            for (String genre : genres) {
+                if (book.isGenre(genre)) {
+                    removeFlag = false;
+                    break;
+                }
+            }
+            if (removeFlag) {
+                return false;
+            }
+        }
+        return !checkInStock || !book.outOfStock(); // final condition
+    }
+
     private Book[] filterSearch(ArrayList<Book> books, double minPrice, double maxPrice,
                                 List<String> genres, boolean checkInStock) {
         boolean checkingGenres = !genres.isEmpty();
         boolean removeFlag;
 
-        for (Book book : books) {
-            if (minPrice != 0 && book.getPrice() < minPrice) {
-                books.remove(book);
-            } else if (maxPrice != 0 && book.getPrice() > maxPrice) {
-                books.remove(book);
-            } else if (checkingGenres) {
-                removeFlag = true;
-                for (String genre : genres) {
-                    if (book.isGenre(genre)) {
-                        removeFlag = false;
-                        break;
-                    }
-                }
-                if (removeFlag) {
-                    books.remove(book);
-                }
-            }
-            else if (checkInStock && book.outOfStock()) {
-                books.remove(book);
-            }
-        }
+        books.removeIf(book -> !matchesFilter(book, minPrice, maxPrice, genres, checkInStock));
 
         Book[] ret =  new Book[books.size()];
         return books.toArray(ret);

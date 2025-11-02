@@ -57,10 +57,13 @@ function Catalog() {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [searchPressed, setSearchPressed] = useState(false);
+  const [viewingAvailable, setViewingAvailable] = useState(false);
+  const [maxPrice, setMaxPrice] = useState(0);
 
   async function fetchBooks() {
     try {
-      const catalog = await axios.get(`http://localhost:8080/catalog/?text=${encodeURIComponent(searchText)}`).then(response => response.data);
+      const url = `http://localhost:8080/catalog/?text=${encodeURIComponent(searchText)}&maxPrice=${encodeURIComponent(maxPrice)}&checkStock=${encodeURIComponent(viewingAvailable)}`
+      const catalog = await axios.get(url).then(response => response.data);
       setBooks(catalog);
     } catch (error) {
       console.log(error);
@@ -92,7 +95,8 @@ function Catalog() {
       <div className="d-flex">
         {/* Left sidebar: Filters */}
         <div className="p-3 border-end" style={{ width: "20rem", minHeight: "100vh" }}>
-          <Filters />
+          <Filters viewingAvailable={viewingAvailable} setViewingAvailable={setViewingAvailable}
+          maxPrice={maxPrice} setMaxPrice={setMaxPrice}/>
         </div>
 
         {/* Right content: Cards */}
