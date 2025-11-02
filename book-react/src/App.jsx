@@ -59,11 +59,17 @@ function Catalog() {
   const [searchPressed, setSearchPressed] = useState(false);
   const [viewingAvailable, setViewingAvailable] = useState(false);
   const [maxPrice, setMaxPrice] = useState(0);
+  const [genres, setGenres] = useState([])
+  const [selectedGenres, setSelectedGenres] = useState([])
 
   async function fetchBooks() {
     try {
-      const url = `http://localhost:8080/catalog/?text=${encodeURIComponent(searchText)}&maxPrice=${encodeURIComponent(maxPrice)}&checkStock=${encodeURIComponent(viewingAvailable)}`
+      let url = `http://localhost:8080/catalog/?text=${encodeURIComponent(searchText)}&maxPrice=${encodeURIComponent(maxPrice)}&checkStock=${encodeURIComponent(viewingAvailable)}`
+      for (let i = 0; i < selectedGenres.length; i++) {
+        url += '&genres=' + selectedGenres[i]
+      }
       const catalog = await axios.get(url).then(response => response.data);
+      console.log(url)
       setBooks(catalog);
     } catch (error) {
       console.log(error);
@@ -72,8 +78,14 @@ function Catalog() {
     }
   }
 
+  async function loadGenres() {
+    const genres = await axios.get('http://localhost:8080/catalog/genres').then(response => response.data);
+    setGenres(genres)
+  }
+
   useEffect(() => { // call once on startup
     fetchBooks();
+    loadGenres();
   }, [])
 
   useEffect(() => {
@@ -96,7 +108,8 @@ function Catalog() {
         {/* Left sidebar: Filters */}
         <div className="p-3 border-end" style={{ width: "20rem", minHeight: "100vh" }}>
           <Filters viewingAvailable={viewingAvailable} setViewingAvailable={setViewingAvailable}
-          maxPrice={maxPrice} setMaxPrice={setMaxPrice}/>
+          maxPrice={maxPrice} setMaxPrice={setMaxPrice} genres={genres} selectedGenres={selectedGenres}
+          setSelectedGenres={setSelectedGenres}/>
         </div>
 
         {/* Right content: Cards */}
