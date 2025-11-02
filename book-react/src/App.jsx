@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import axios from 'axios'
+import axios from 'axios';
 
 import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -10,7 +10,7 @@ import './App.css';
 import SearchBar from './components/SearchBar.jsx';
 import BookCard from './components/BookCard.jsx';
 import Filters from './components/Filters.jsx';
-
+import Cart from './components/Cart.jsx';
 
 function NavigationBar() {
   const navigate = useNavigate();
@@ -121,9 +121,7 @@ function Catalog() {
 
 function Account() {
   return (
-    <Button variant="danger" size="sm">
-      Logout
-    </Button>
+    <Cart />
   );
 }
 
