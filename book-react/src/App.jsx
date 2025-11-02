@@ -8,6 +8,7 @@ import { useState } from 'react';
 import './App.css';
 import SearchBar from './components/SearchBar.jsx';
 import BookCard from './components/BookCard.jsx';
+import Filters from './components/Filters.jsx';
 
 function NavigationBar() {
   const navigate = useNavigate();
@@ -51,22 +52,37 @@ function Bookshelf() {
 function Catalog() {
   return ( 
     <div>
-      <SearchBar placeholder = "Search by book, author, or series..."/>
-      <div className="d-flex flex-wrap justify-content-left gap-4 p-4">
-        <BookCard 
-          title="The Lightning Thief" 
-          author="Rick Riordan" 
-          series="Percy Jackson & the Olympians"
-          volume="1"
-          cover="/vite.svg"
-        />
-        <BookCard 
-          title="Inkheart" 
-          author="Cornelia Funke" 
-          series="Inkheart Trilogy"
-          volume="1"
-          cover="src/assets/react.svg"
-        />
+      {/* Search bar full width at top */}
+      <div className="p-3 border-bottom bg-light">
+        <SearchBar placeholder="Search by book, author, or series..." />
+      </div>
+
+      {/* Main content area */}
+      <div className="d-flex">
+        {/* Left sidebar: Filters */}
+        <div className="p-3 border-end" style={{ width: "250px", minHeight: "100vh" }}>
+          <Filters />
+        </div>
+
+        {/* Right content: Cards */}
+        <div className="flex-grow-1 p-4">
+          <div className="d-flex flex-wrap justify-content-start gap-4">
+            <BookCard 
+              title="The Lightning Thief" 
+              author="Rick Riordan" 
+              series="Percy Jackson & the Olympians"
+              volume="1"
+              cover="/vite.svg"
+            />
+            <BookCard 
+              title="Inkheart" 
+              author="Cornelia Funke" 
+              series="Inkheart Trilogy"
+              volume="1"
+              cover="src/assets/react.svg"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
