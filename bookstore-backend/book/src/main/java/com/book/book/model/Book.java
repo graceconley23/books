@@ -23,7 +23,7 @@ public class Book {
         this.price = price;
         this.genres = genres;
         this.numberInSeries = numberInSeries;
-        this.numberOfPages = numberOfPages;
+        this.numberOfPages = numberOfPages; //vist.svg
     }
 
     public String getTitle() {
