@@ -23,6 +23,16 @@ function BookCard({title, author, series, volume, cover, price, isbn, userId, re
       setUpdating(false);
     }
   };
+
+  async function addToBookshelf() {
+    console.log(`http://localhost:8080/account/bookshelf/${encodeURIComponent(userId)}/${encodeURIComponent(isbn)}`)
+    try {
+      let response = await axios.put(`http://localhost:8080/account/bookshelf/${encodeURIComponent(userId)}/${encodeURIComponent(isbn)}`).then(response => response);
+      alert("Added " + response.data.title + " to bookshelf!")
+    } catch (error) {
+      alert("Failed to add book")
+    }
+  }
   
   return (
     <Card style={{ width: "16rem" }}>
@@ -43,7 +53,7 @@ function BookCard({title, author, series, volume, cover, price, isbn, userId, re
 
         <div className="d-grid gap-2">
           <Button variant="outline-primary" size="sm" className="w-100"
-            onClick={() => alert("Added to Bookshelf")}
+            onClick={addToBookshelf}
           >
             Add to Bookshelf
           </Button>
