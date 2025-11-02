@@ -3,7 +3,7 @@ import BookCartCard from "./BookCartCard.jsx";
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-function Cart() {
+function Cart({ setCartQuantity }) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState(2); // hardcoded for now
@@ -13,9 +13,7 @@ function Cart() {
 
   async function fetchBooks() {
     try {
-      const cart = await axios.get(`http://localhost:8080/account/${userId}`).then(response => response.data);
-      console.log(cart);
-      console.log(Array.isArray(cart));
+      const cart = await axios.get(`http://localhost:8080/account/cart/${userId}`).then(response => response.data);
       setBooks(cart);
     } catch (error) {
       console.log(error);
@@ -29,13 +27,17 @@ function Cart() {
     setUserId(2); // hardcoded for now
   }, [])
 
-  if (loading) return <p>Loading cart...</p>
-
   const quantity = books.reduce((sum, book) => sum + (book.quantity), 0);
   const subtotal = books.reduce((sum, book) => sum + (book.price * book.quantity), 0);
   const tax = subtotal * 0.08;
   const shipping = quantity > 0 ? 5.99 : 0;
   const total = subtotal + tax + shipping;
+
+  useEffect(() => {
+    setCartQuantity(quantity);
+  }, [quantity, setCartQuantity]);
+
+  if (loading) return <p>Loading cart...</p>
 
   return ( 
     <div>
@@ -54,6 +56,9 @@ function Cart() {
                 cover={book.coverImageUrl}
                 price={book.price}
                 quantity={book.quantity}
+                isbn={book.isbn}
+                userId={userId}
+                refreshCart={fetchBooks}
               />
             ))}
           </div>

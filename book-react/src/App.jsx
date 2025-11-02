@@ -1,5 +1,7 @@
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import Badge from 'react-bootstrap/Badge';
+
 import axios from 'axios';
 
 import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
@@ -12,8 +14,7 @@ import Filters from './components/Filters.jsx';
 import Cart from './components/Cart.jsx';
 import Bookshelf from './components/Bookshelf.jsx';
 
-
-function NavigationBar() {
+function NavigationBar({quantity}) {
   const navigate = useNavigate();
   const currentPath = location.pathname.replace("/", "") || "bookshelf";
 
@@ -29,14 +30,18 @@ function NavigationBar() {
     >
       <Tab eventKey="bookshelf" title="My Bookshelf" />
       <Tab eventKey="catalog" title="Catalog" />
-      <Tab eventKey="account" title="Account" />
+      <Tab eventKey="account" title={<>
+        Account <Badge bg="secondary">{quantity}</Badge>
+      </>
+      }/>
     </Tabs>
     </div>
   );
 }
 
-function Catalog() {
+function Catalog({setCartQuantity}) {
   const [books, setBooks] = useState([]);
+  const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [searchPressed, setSearchPressed] = useState(false);
@@ -44,7 +49,7 @@ function Catalog() {
   const [maxPrice, setMaxPrice] = useState(0);
   const [genres, setGenres] = useState([])
   const [selectedGenres, setSelectedGenres] = useState([]);
-  const [currentUser, setCurrentUser] = useState(0);
+  const [currentUser] = useState(2); // hardcoded for now
 
   async function fetchBooks() {
     try {
@@ -67,10 +72,26 @@ function Catalog() {
     setGenres(genres)
   }
 
+  async function fetchCart() {
+    try {
+      const cart = await axios.get(`http://localhost:8080/account/cart/${currentUser}`).then(response => response.data);
+      setCart(cart);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const quantity = cart.reduce((sum, book) => sum + (book.quantity), 0);
+  useEffect(() => {
+    setCartQuantity(quantity);
+  }, [quantity, setCartQuantity]);
+
   useEffect(() => { // call once on startup
     fetchBooks();
     loadGenres();
-    setCurrentUser(2);
+    fetchCart();
   }, [])
 
   useEffect(() => {
@@ -101,7 +122,7 @@ function Catalog() {
         <div className="flex-grow-1 p-4">
           <div className="d-flex flex-wrap justify-content-start gap-4">
             {books.map((book, index) => (
-              <BookCard
+              <BookCard setCartQuantity={setCartQuantity}
                 key={index}
                 title={book.title}
                 author={book.author}
@@ -109,6 +130,9 @@ function Catalog() {
                 volume={book.numberInSeries}
                 cover={book.coverImageUrl}
                 price={book.price}
+                isbn={book.isbn}
+                userId={currentUser}
+                refreshCartCount={fetchCart}
               />
             ))}
           </div>
@@ -118,23 +142,25 @@ function Catalog() {
   );
 }
 
-function Account() {
+function Account({ setCartQuantity }) {
   return (
-    <Cart />
+    <Cart setCartQuantity={setCartQuantity}/>
   );
 }
 
 function App() {
+  const [cartQuantity, setCartQuantity] = useState(0);
+
   return (
     <BrowserRouter>
-      <NavigationBar />
+      <NavigationBar quantity={cartQuantity} />
 
       {/* Routes */}
       <Routes>
         <Route path="*" element={<Navigate to="/bookshelf" replace />} /> {/* default route */}
         <Route path="/bookshelf" element={<Bookshelf />} />
-        <Route path="/catalog" element={<Catalog />} />
-        <Route path="/account" element={<Account />} />
+        <Route path="/catalog" element={<Catalog setCartQuantity={setCartQuantity}/>} />
+        <Route path="/account" element={<Account setCartQuantity={setCartQuantity}/>} />
       </Routes>
     </BrowserRouter>
   );
