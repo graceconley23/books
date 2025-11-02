@@ -91,7 +91,7 @@ function Catalog() {
       {/* Main content area */}
       <div className="d-flex">
         {/* Left sidebar: Filters */}
-        <div className="p-3 border-end" style={{ width: "22rem", minHeight: "100vh" }}>
+        <div className="p-3 border-end" style={{ width: "20rem", minHeight: "100vh" }}>
           <Filters />
         </div>
 
@@ -108,21 +108,6 @@ function Catalog() {
                 cover={book.coverImageUrl}
               />
             ))}
-
-            <BookCard 
-              title="The Lightning Thief" 
-              author="Rick Riordan" 
-              series="Percy Jackson & the Olympians"
-              volume="1"
-              cover="/vite.svg"
-            />
-            <BookCard 
-              title="Inkheart" 
-              author="Cornelia Funke" 
-              series="Inkheart Trilogy"
-              volume="1"
-              cover="src/assets/react.svg"
-            />
           </div>
         </div>
       </div>
