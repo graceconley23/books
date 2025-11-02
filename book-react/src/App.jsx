@@ -1,14 +1,16 @@
 import Button from 'react-bootstrap/Button';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import axios from 'axios'
 
 import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import './App.css';
 import SearchBar from './components/SearchBar.jsx';
 import BookCard from './components/BookCard.jsx';
 import Filters from './components/Filters.jsx';
+
 
 function NavigationBar() {
   const navigate = useNavigate();
@@ -50,6 +52,24 @@ function Bookshelf() {
 }
 
 function Catalog() {
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  async function fetchBooks() {
+    try {
+      const catalog = await axios.get('http://localhost:8080/catalog/').then(response => response.data);
+      setBooks(catalog);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  fetchBooks();
+
+  if (loading) return <p>Loading catalog...</p>
+
   return ( 
     <div>
       {/* Search bar full width at top */}
@@ -67,6 +87,16 @@ function Catalog() {
         {/* Right content: Cards */}
         <div className="flex-grow-1 p-4">
           <div className="d-flex flex-wrap justify-content-start gap-4">
+            {books.map((book, index) => (
+              <BookCard
+                key={index}
+                title={book.title}
+                author={book.author}
+                series={book.series}
+                volume={book.numberInSeries}
+                cover="/vite.svg"
+              />
+            ))}
             <BookCard 
               title="The Lightning Thief" 
               author="Rick Riordan" 
