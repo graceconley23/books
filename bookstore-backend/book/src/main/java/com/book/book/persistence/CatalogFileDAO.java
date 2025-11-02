@@ -1,13 +1,18 @@
 package com.book.book.persistence;
 
-import com.book.book.model.Book;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
+import com.book.book.model.Book;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class CatalogFileDAO implements CatalogDAO {
@@ -93,7 +98,7 @@ public class CatalogFileDAO implements CatalogDAO {
                 return false;
             }
         }
-        return !checkInStock || !book.outOfStock(); // final condition
+        return (!checkInStock || !book.outOfStock()); // final condition
     }
 
     private Book[] filterSearch(ArrayList<Book> books, double minPrice, double maxPrice,
@@ -182,5 +187,13 @@ public class CatalogFileDAO implements CatalogDAO {
         }
         writeToFile();
         return book;
+    }
+
+    @Override
+    public int getStock(String ISBN) throws IOException {
+        if (!bookMap.containsKey(ISBN)) {
+            return -1;
+        }
+        return bookMap.get(ISBN).getQuantity();
     }
 }

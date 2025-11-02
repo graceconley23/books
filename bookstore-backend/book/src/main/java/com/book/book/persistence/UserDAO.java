@@ -1,9 +1,9 @@
 package com.book.book.persistence;
 
+import java.io.IOException;
+
 import com.book.book.model.Book;
 import com.book.book.model.User;
-
-import java.io.IOException;
 
 public interface UserDAO {
     User[] getUsers() throws IOException;
@@ -33,4 +33,6 @@ public interface UserDAO {
     int updateAmountRead(int id, int number) throws IOException;
 
     int getAmountRead(int id) throws IOException;
+
+    Book[] checkoutCart(int id) throws IOException;
 }

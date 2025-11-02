@@ -22,6 +22,17 @@ function Cart({ setCartQuantity }) {
     }
   }
 
+  async function checkout() {
+    try {
+      await axios.delete(`http://localhost:8080/account/cart/${userId}`).then(response => response.data);
+      await fetchBooks();
+    } catch (error) {
+        alert("Error: One or more items in your cart are out of stock. " + error.response.data);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => { // call once on startup
     fetchBooks();
     setUserId(2); // hardcoded for now
@@ -72,7 +83,9 @@ function Cart({ setCartQuantity }) {
           <p>Shipping: {formatPrice(shipping)}</p>
           <hr />
           <p>Total: {formatPrice(total)}</p>
-          <button className="btn btn-success w-100">Checkout</button>
+          <button className="btn btn-success w-100" onClick={checkout}>
+            Checkout
+          </button>
         </div>
       </div>
     </div>
