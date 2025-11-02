@@ -204,4 +204,27 @@ public class UserFileDAO implements UserDAO {
         temp.toArray(cart);
         return cart;
     }
+
+    @Override
+    public int updateAmountRead(int id, int number) throws IOException {
+        if (!userMap.containsKey(id)) {
+            return 0;
+        }
+        else {
+            User user = userMap.get(id);
+            user.updateBooksReadThisYear(number);
+            return user.getBooksReadThisYear();
+        }
+    }
+
+    @Override
+    public int getAmountRead(int id) throws IOException {
+        if (!userMap.containsKey(id)) {
+            return 0;
+        }
+        else {
+            User user = userMap.get(id);
+            return user.getBooksReadThisYear();
+        }
+    }
 }

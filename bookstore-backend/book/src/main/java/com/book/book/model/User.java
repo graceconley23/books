@@ -111,7 +111,7 @@ public class User {
         return this.booksReadThisYear;
     }
 
-    public void increaseBooksReadThisYear(int quantity) {
+    public void updateBooksReadThisYear(int quantity) {
         this.booksReadThisYear += quantity;
     }
 

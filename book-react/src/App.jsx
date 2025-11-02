@@ -39,7 +39,7 @@ function NavigationBar({quantity}) {
   );
 }
 
-function Catalog({setCartQuantity}) {
+function Catalog({currentUser, setCurrentUser, setCartQuantity}) {
   const [books, setBooks] = useState([]);
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -49,7 +49,6 @@ function Catalog({setCartQuantity}) {
   const [maxPrice, setMaxPrice] = useState(0);
   const [genres, setGenres] = useState([])
   const [selectedGenres, setSelectedGenres] = useState([]);
-  const [currentUser] = useState(2); // hardcoded for now
 
   async function fetchBooks() {
     try {
@@ -89,6 +88,7 @@ function Catalog({setCartQuantity}) {
   }, [quantity, setCartQuantity]);
 
   useEffect(() => { // call once on startup
+    setCurrentUser(2); // hardcoded for now
     fetchBooks();
     loadGenres();
     fetchCart();
@@ -150,6 +150,7 @@ function Account({ setCartQuantity }) {
 
 function App() {
   const [cartQuantity, setCartQuantity] = useState(0);
+    const [currentUser, setCurrentUser] = useState(2);
 
   return (
     <BrowserRouter>
@@ -158,8 +159,8 @@ function App() {
       {/* Routes */}
       <Routes>
         <Route path="*" element={<Navigate to="/bookshelf" replace />} /> {/* default route */}
-        <Route path="/bookshelf" element={<Bookshelf />} />
-        <Route path="/catalog" element={<Catalog setCartQuantity={setCartQuantity}/>} />
+        <Route path="/bookshelf" element={<Bookshelf currentUser={currentUser}/>} />
+        <Route path="/catalog" element={<Catalog currentUser={currentUser} setCurrentUser={setCurrentUser} setCartQuantity={setCartQuantity}/>} />
         <Route path="/account" element={<Account setCartQuantity={setCartQuantity}/>} />
       </Routes>
     </BrowserRouter>
