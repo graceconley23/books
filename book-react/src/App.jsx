@@ -150,7 +150,7 @@ function Account({ setCartQuantity }) {
 
 function App() {
   const [cartQuantity, setCartQuantity] = useState(0);
-    const [currentUser, setCurrentUser] = useState(2);
+  const [currentUser, setCurrentUser] = useState(2);
 
   return (
     <BrowserRouter>
