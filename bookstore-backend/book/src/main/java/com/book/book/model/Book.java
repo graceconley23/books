@@ -128,6 +128,11 @@ public class Book {
         this.coverImageUrl = coverImageUrl;
     }
 
+    public Book copy() {
+        Book copy = new Book(title, author, series, ISBN, 1, price, genres, numberInSeries, numberOfPages, coverImageUrl);
+        return copy;
+    }
+
     @Override
     public String toString() {
         return "Title: " + title + " By: " + author + " Series: " + series +

@@ -1,4 +1,3 @@
-import Button from 'react-bootstrap/Button';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import axios from 'axios';
@@ -11,6 +10,8 @@ import SearchBar from './components/SearchBar.jsx';
 import BookCard from './components/BookCard.jsx';
 import Filters from './components/Filters.jsx';
 import Cart from './components/Cart.jsx';
+import Bookshelf from './components/Bookshelf.jsx';
+
 
 function NavigationBar() {
   const navigate = useNavigate();
@@ -34,24 +35,6 @@ function NavigationBar() {
   );
 }
 
-function Bookshelf() {
-  const [count, setCount] = useState(0);
-
-  function increaseCount() {
-    setCount(count + 1);
-  }
-
-  return (
-    <div className="d-grid gap-2">
-      <h1>Welcome Bookworms!</h1>
-      <Button variant="outline-success" size="lg" onClick={increaseCount}>
-        Read!
-      </Button>
-      <h2>You’ve read {count} times this year</h2>
-    </div>
-  )
-}
-
 function Catalog() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -60,7 +43,8 @@ function Catalog() {
   const [viewingAvailable, setViewingAvailable] = useState(false);
   const [maxPrice, setMaxPrice] = useState(0);
   const [genres, setGenres] = useState([])
-  const [selectedGenres, setSelectedGenres] = useState([])
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [currentUser, setCurrentUser] = useState(0);
 
   async function fetchBooks() {
     try {
@@ -86,6 +70,7 @@ function Catalog() {
   useEffect(() => { // call once on startup
     fetchBooks();
     loadGenres();
+    setCurrentUser(2);
   }, [])
 
   useEffect(() => {

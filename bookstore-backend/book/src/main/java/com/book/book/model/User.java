@@ -49,19 +49,21 @@ public class User {
         return this.bookshelf;
     }
 
-    public boolean addToBookshelf(Book book) {
+    public Book addToBookshelf(Book book) {
         if (this.bookshelf.contains(book)) {
             Book current = bookshelf.get(bookshelf.indexOf(book));
             current.increaseQuantity(1);
+            return current;
         } else {
-            this.bookshelf.add(book);
+            Book copy = book.copy();
+            this.bookshelf.add(copy); // same book but quantity 1
+            return copy;
         }
-        return true;
     }
 
-    public boolean removeFromBookshelf(Book book) {
+    public Book removeFromBookshelf(Book book) {
         if (!this.bookshelf.contains(book)) {
-            return false;
+            return null;
         } else {
             Book current = bookshelf.get(bookshelf.indexOf(book));
             if (current.getQuantity() == 1) {
@@ -69,7 +71,7 @@ public class User {
             } else {
                 current.decreaseQuantity(1);
             }
-            return true;
+            return current;
         }
     }
 
@@ -78,20 +80,22 @@ public class User {
     }
 
     // TODO check if book in stock
-    public boolean addToShoppingCart(Book book) {
+    public Book addToShoppingCart(Book book) {
         if (this.shoppingCart.contains(book)) {
             Book current = shoppingCart.get(shoppingCart.indexOf(book));
             current.increaseQuantity(1);
+            return current;
         } else {
-            this.shoppingCart.add(book);
+            Book copy = book.copy();
+            this.shoppingCart.add(book.copy());
+            return copy;
         }
-        return true;
     }
 
     // TODO check if book in stock
-    public boolean removeFromShoppingCart(Book book) {
+    public Book removeFromShoppingCart(Book book) {
         if (!this.shoppingCart.contains(book)) {
-            return false;
+            return null;
         } else {
             Book current = shoppingCart.get(shoppingCart.indexOf(book));
             if (current.getQuantity() == 1) {
@@ -99,7 +103,7 @@ public class User {
             } else {
                 current.decreaseQuantity(1);
             }
-            return true;
+            return current;
         }
     }
 

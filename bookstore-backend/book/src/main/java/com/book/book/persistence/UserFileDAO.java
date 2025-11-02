@@ -2,6 +2,7 @@ package com.book.book.persistence;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -19,11 +20,14 @@ public class UserFileDAO implements UserDAO {
     public ObjectMapper objectMapper;
     static int nextId;
     private TreeMap<Integer, User> userMap;
+    private CatalogDAO catalogDAO;
 
-    public UserFileDAO(@Value("${users.file}") String filename, ObjectMapper objectMapper) {
+    public UserFileDAO(@Value("${users.file}") String filename, ObjectMapper
+            objectMapper, CatalogDAO catalogDAO) {
         this.file = new File(filename);
         this.objectMapper = objectMapper;
         loadFromFile();
+        this.catalogDAO = catalogDAO;
     }
 
     private synchronized int nextId() {
@@ -132,23 +136,51 @@ public class UserFileDAO implements UserDAO {
     }
 
     @Override
-    public Book addToCart(int id, int bookID) {
-        return null;
+    public Book addToCart(int id, String ISBN) throws IOException {
+        Book toAdd = catalogDAO.getBook(ISBN);
+        User user = getUser(id);
+        if (toAdd == null || user == null) {
+            return null;
+        }
+        Book added = user.addToShoppingCart(toAdd);
+        writeToFile();
+        return added;
     }
 
     @Override
-    public Book removeFromCart(int id, int bookID) {
-        return null;
+    public Book removeFromCart(int id, String ISBN) throws IOException {
+        Book toRemove = catalogDAO.getBook(ISBN);
+        User user = getUser(id);
+        if (toRemove == null || user == null) {
+            return null;
+        }
+        Book removed = user.removeFromShoppingCart(toRemove);
+        writeToFile();
+        return removed;
     }
 
     @Override
-    public Book addToBookshelf(int id, int bookID) {
-        return null;
+    public Book addToBookshelf(int id, String ISBN) throws IOException {
+        Book toAdd = catalogDAO.getBook(ISBN);
+        User user = getUser(id);
+        if (toAdd == null || user == null) {
+            return null;
+        }
+        Book added = user.addToBookshelf(toAdd);
+        writeToFile();
+        return added;
     }
 
     @Override
-    public Book removeFromBookshelf(int id, int bookID) {
-        return null;
+    public Book removeFromBookshelf(int id, String ISBN) throws IOException {
+        Book toRemove = catalogDAO.getBook(ISBN);
+        User user = getUser(id);
+        if (toRemove == null || user == null) {
+            return null;
+        }
+        Book removed = user.removeFromBookshelf(toRemove);
+        writeToFile();
+        return removed;
     }
 
     @Override

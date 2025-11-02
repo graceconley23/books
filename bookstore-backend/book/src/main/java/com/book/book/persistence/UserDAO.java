@@ -18,13 +18,13 @@ public interface UserDAO {
 
     User deleteUser(int id) throws IOException;
 
-    Book addToCart(int id, int bookID) throws IOException;
+    Book addToCart(int id, String ISBN) throws IOException;
 
-    Book removeFromCart(int id, int bookID) throws IOException;
+    Book removeFromCart(int id, String ISBN) throws IOException;
 
-    Book addToBookshelf(int id, int bookID) throws IOException;
+    Book addToBookshelf(int id, String ISBN) throws IOException;
 
-    Book removeFromBookshelf(int id, int bookID) throws IOException;
+    Book removeFromBookshelf(int id, String ISBN) throws IOException;
 
     Book[] getBookshelf(int id) throws IOException;
 
