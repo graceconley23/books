@@ -91,7 +91,7 @@ function Catalog() {
       {/* Main content area */}
       <div className="d-flex">
         {/* Left sidebar: Filters */}
-        <div className="p-3 border-end" style={{ width: "250px", minHeight: "100vh" }}>
+        <div className="p-3 border-end" style={{ width: "22rem", minHeight: "100vh" }}>
           <Filters />
         </div>
 
