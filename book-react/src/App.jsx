@@ -4,7 +4,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import axios from 'axios'
 
 import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import './App.css';
 import SearchBar from './components/SearchBar.jsx';
@@ -81,7 +81,7 @@ function Catalog() {
       {/* Main content area */}
       <div className="d-flex">
         {/* Left sidebar: Filters */}
-        <div className="p-3 border-end" style={{ width: "250px", minHeight: "100vh" }}>
+        <div className="p-3 border-end" style={{ width: "22rem", minHeight: "100vh" }}>
           <Filters />
         </div>
 
