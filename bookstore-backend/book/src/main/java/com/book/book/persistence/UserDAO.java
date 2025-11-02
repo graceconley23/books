@@ -25,4 +25,8 @@ public interface UserDAO {
     Book addToBookshelf(int id, int bookID) throws IOException;
 
     Book removeFromBookshelf(int id, int bookID) throws IOException;
+
+    Book[] getBookshelf(int id) throws IOException;
+
+    Book[] getCart(int id) throws IOException;
 }

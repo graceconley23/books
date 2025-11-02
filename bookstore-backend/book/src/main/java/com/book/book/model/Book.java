@@ -1,18 +1,27 @@
 package com.book.book.model;
 
+import java.util.Set;
+
 public class Book {
     private String title;
     private String author;
     private String series;
     private String ISBN;
     private int quantity;
+    private double price;
+    private Set<String> genres;
+    private int numberInSeries;
+    private int numPages;
 
-    public Book(String title, String author, String series, String ISBN, int quantity) {
+    public Book(String title, String author, String series, String ISBN,
+                int quantity, double price, Set<String> genres) {
         this.title = title;
         this.author = author;
         this.series = series;
         this.ISBN = ISBN;
         this.quantity = quantity;
+        this.price = price;
+        this.genres = genres;
     }
 
     public String getTitle() {
@@ -63,10 +72,39 @@ public class Book {
         this.quantity -= amount;
     }
 
+    public boolean outOfStock() {
+        return quantity <= 0;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Set<String> getGenres() {
+        return genres;
+    }
+
+    public boolean addGenre(String genre) {
+        return genres.add(genre);
+    }
+
+    public boolean removeGenre(String genre) {
+        return genres.remove(genre);
+    }
+
+    public boolean isGenre(String genre) {
+        return genres.contains(genre);
+    }
+
     @Override
     public String toString() {
         return "Title: " + title + " By: " + author + " Series: " + series +
-                " ISBN: " + ISBN + " Quantity: " + quantity;
+                " ISBN: " + ISBN + " Quantity: " + quantity + "  Price: "
+                + price +  " Genres: " + genres.toString();
     }
 
     @Override

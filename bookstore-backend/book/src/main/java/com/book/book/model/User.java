@@ -77,6 +77,7 @@ public class User {
         return this.shoppingCart;
     }
 
+    // TODO check if book in stock
     public boolean addToShoppingCart(Book book) {
         if (this.shoppingCart.contains(book)) {
             Book current = shoppingCart.get(shoppingCart.indexOf(book));
@@ -87,6 +88,7 @@ public class User {
         return true;
     }
 
+    // TODO check if book in stock
     public boolean removeFromShoppingCart(Book book) {
         if (!this.shoppingCart.contains(book)) {
             return false;
@@ -119,5 +121,10 @@ public class User {
 
     public void setProfilePictureLink(String newLink) {
         this.profilePictureLink = newLink;
+    }
+
+    // TODO
+    public void buyShoppingCart() {
+
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 @Component
@@ -92,9 +93,6 @@ public class UserFileDAO implements UserDAO {
         }
     }
 
-    /**
-     ** {@inheritDoc}
-     */
     @Override
     public User createUser(User user) throws IOException {
         synchronized (userMap) {
@@ -105,9 +103,6 @@ public class UserFileDAO implements UserDAO {
         }
     }
 
-    /**
-     ** {@inheritDoc}
-     */
     @Override
     public User updateUser(int id, User user) throws IOException {
         synchronized (userMap) {
@@ -121,9 +116,6 @@ public class UserFileDAO implements UserDAO {
         }
     }
 
-    /**
-     ** {@inheritDoc}
-     */
     @Override
     public User deleteUser(int id) throws IOException {
         synchronized(userMap) {
@@ -132,7 +124,7 @@ public class UserFileDAO implements UserDAO {
                 userMap.remove(id);
                 writeToFile();
                 return ret;
-            } else{
+            } else {
                 return null;
             }
         }
@@ -156,5 +148,27 @@ public class UserFileDAO implements UserDAO {
     @Override
     public Book removeFromBookshelf(int id, int bookID) {
         return null;
+    }
+
+    @Override
+    public Book[] getBookshelf(int id) throws IOException {
+        if (!userMap.containsKey(id)) {
+            return null;
+        }
+        List<Book> temp = userMap.get(id).getBookshelf();
+        Book[] bookshelf = new Book[temp.size()];
+        temp.toArray(bookshelf);
+        return bookshelf;
+    }
+
+    @Override
+    public Book[] getCart(int id) throws IOException {
+        if (!userMap.containsKey(id)) {
+            return null;
+        }
+        List<Book> temp = userMap.get(id).getShoppingCart();
+        Book[] cart = new Book[temp.size()];
+        temp.toArray(cart);
+        return cart;
     }
 }
