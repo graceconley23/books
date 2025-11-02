@@ -2,7 +2,6 @@ package com.book.book.persistence;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -226,5 +225,31 @@ public class UserFileDAO implements UserDAO {
             User user = userMap.get(id);
             return user.getBooksReadThisYear();
         }
+    }
+
+    @Override
+    public Book[] checkoutCart(int id) throws IOException {
+        if (!userMap.containsKey(id)) {
+            return null;
+        }
+
+        User user = userMap.get(id);
+
+        List<Book> cart = user.getShoppingCart();
+        for (Book book : cart) {
+            int available = catalogDAO.getStock(book.getISBN());
+            if (book.getQuantity() > available) {
+                throw new IOException("Not enough stock for book: " + book.getTitle());
+            }
+        }
+
+        Book[] purchased = user.checkoutCart();
+        for (Book book : purchased) {
+            catalogDAO.decreaseStock(book.getISBN(), book.getQuantity());
+        }
+
+        writeToFile();
+
+        return purchased;
     }
 }

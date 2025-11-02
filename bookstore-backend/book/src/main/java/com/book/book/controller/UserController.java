@@ -1,12 +1,17 @@
 package com.book.book.controller;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.logging.Logger;
 
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.book.book.model.Book;
 import com.book.book.model.User;
@@ -172,20 +177,22 @@ public class UserController {
     //     }
     // }
 
-    // @DeleteMapping("/{ISBN}")
-    // public ResponseEntity<Book> deleteBook(@PathVariable String ISBN) throws IOException {
-    //     logger.info("DELETE catalog/" + ISBN);
-    //     try {
-    //         Book ret = catalogDAO.deleteBook(ISBN);
-    //         if (ret == null) {
-    //             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    //         }
-    //         return new ResponseEntity<>(ret, HttpStatus.OK);
-    //     }
-    //     catch (IOException e) {
-    //         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    //     }
-    // }
+    @DeleteMapping("/cart/{id}")
+    public ResponseEntity<?> checkout(@PathVariable int id) throws IOException {
+        logger.info("DELETE cart/" + id);
+        try {
+            Book[] ret = userDAO.checkoutCart(id);
+            if (ret == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(ret, HttpStatus.OK);
+        }
+        catch (IOException e) {
+            return ResponseEntity
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(Map.of("error", e.getMessage()));
+        }
+    }
 
     // @PutMapping("/restock/{ISBN}/{amount}")
     // public ResponseEntity<Book> increaseStock(@PathVariable String ISBN, @PathVariable int amount) throws IOException {

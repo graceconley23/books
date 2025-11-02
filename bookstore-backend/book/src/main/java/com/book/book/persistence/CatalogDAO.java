@@ -1,9 +1,10 @@
 package com.book.book.persistence;
 
-import com.book.book.model.Book;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+
+import com.book.book.model.Book;
 
 public interface CatalogDAO {
     Book[] getBooks() throws IOException;
@@ -24,4 +25,6 @@ public interface CatalogDAO {
     Book decreaseStock(String ISBN, int quantity) throws IOException;
 
     Set<String> getGenres();
+
+    int getStock(String ISBN) throws IOException;
 }

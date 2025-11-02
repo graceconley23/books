@@ -127,8 +127,25 @@ public class User {
         this.profilePictureLink = newLink;
     }
 
-    // TODO
-    public void buyShoppingCart() {
-
+    public Book[] checkoutCart() {
+        Book[] purchased = new Book[this.shoppingCart.size()];
+        int i = 0;
+        for (Book book : this.shoppingCart) {
+            this.addToBookshelf(book);
+            purchased[i++] = book;
+        }
+        this.shoppingCart.clear();
+        return purchased;
     }
+
+    // public void clearCart() {
+    //     Book[] purchased = new Book[this.shoppingCart.size()];
+    //     int i = 0;
+    //     for (Book book : this.shoppingCart) {
+    //         this.addToBookshelf(book);
+    //         purchased[i++] = book;
+    //     }
+    //     this.shoppingCart.clear();
+    //     return purchased;
+    // }
 }
